@@ -24,8 +24,8 @@ return new class extends Migration
             $table->text('keywords');
             $table->integer('total_views')->default(0); 
             $table->string('published_by')->nullable();
-            $table->date('published_at')->nullable()->index();
-            $table->boolean('published')->default(false);
+            $table->dateTime('published_at')->nullable();
+            $table->boolean('is_published')->default(false);
             $table->foreignIdFor(Category::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->timestamps();

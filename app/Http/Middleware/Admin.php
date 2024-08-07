@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use Auth:
+use Illuminate\Support\Facades\Auth;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,11 +16,11 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->role != 'admin'){
-            Auth::logout();
-            abort(403);
+        $user = Auth::user();
+        $check = Auth::check();
+        if ($check && $user->hasRole('admin')) {
+            return $next($request);
         }
-        
-        return $next($request);
+        abort(404);
     }
 }

@@ -15,8 +15,10 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('assigned_role')->default('visitor');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('slug')->unique();
             $table->rememberToken();
             $table->timestamps();
         });

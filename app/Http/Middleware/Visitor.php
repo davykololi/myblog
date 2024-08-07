@@ -2,11 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Support\Facades\Auth;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Ordinary
+class Visitor
 {
     /**
      * Handle an incoming request.
@@ -15,11 +16,11 @@ class Ordinary
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->role != 'ordinary'){
-            Auth::logout();
-            abort(403);
+        $user = Auth::user();
+        $check = Auth::check();
+        if ($check && $user->hasRole('visitor')) {
+            return $next($request);
         }
-
-        return $next($request);
+        abort(404);
     }
 }

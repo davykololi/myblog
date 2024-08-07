@@ -1,0 +1,13 @@
+/* Social Links */
+#social-buttons ul{padding-left: 0}
+#social-buttons ul li{display: inline-block;}
+#social-buttons ul li a{padding: 6px;border: 1px solid #ccc;border-radius: 5px;margin: 1px;font-size: 25px;background-color: white}
+#social-buttons .fab-fa-facebook{color: #0d6efd}
+#social-buttons .fa-twitter{color: deepskyblue}
+#social-buttons .fab-fa-linkedin{color: #0e76a8}
+#social-buttons .fa-whatsapp{color: #25D366}
+#social-buttons .fa-reddit{color: #FF4500}
+#social-buttons .fa-telegram{color: #0088cc}
+
+
+.shareit{position: fixed;top:-5px;display: block;}

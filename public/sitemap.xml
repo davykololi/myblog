@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+    <url>
+        <loc>http://localhost:8000</loc>
+        <lastmod>2024-08-04T00:00:00+00:00</lastmod>
+
+            </url>
+    <url>
+        <loc>http://localhost:8000/contact-us</loc>
+        <lastmod>2024-08-04T00:00:00+00:00</lastmod>
+
+            </url>
+    <url>
+        <loc>http://localhost:8000/about-us</loc>
+        <lastmod>2024-08-04T00:00:00+00:00</lastmod>
+
+            </url>
+    <url>
+        <loc>http://localhost:8000/blog</loc>
+        <lastmod>2024-08-04T00:00:00+00:00</lastmod>
+
+            </url>
+    <url>
+        <loc>http://localhost:8000/private-policy</loc>
+        <lastmod>2024-08-04T00:00:00+00:00</lastmod>
+
+            </url>
+    <url>
+        <loc>http://localhost:8000/category/tailwind-css</loc>
+        <lastmod>2024-08-04T18:29:52+00:00</lastmod>
+
+            </url>
+    <url>
+        <loc>http://localhost:8000/category/laravel</loc>
+        <lastmod>2024-08-04T18:30:30+00:00</lastmod>
+
+            </url>
+    <url>
+        <loc>http://localhost:8000/category/react-js</loc>
+        <lastmod>2024-08-04T18:31:05+00:00</lastmod>
+
+            </url>
+    <url>
+        <loc>http://localhost:8000/category/vue-js</loc>
+        <lastmod>2024-08-04T18:31:47+00:00</lastmod>
+
+            </url>
+    <url>
+        <loc>http://localhost:8000/article/william-ruto-for-president-in-2027</loc>
+        <lastmod>2024-08-05T02:23:40+00:00</lastmod>
+
+            </url>
+    <url>
+        <loc>http://localhost:8000/article/raila-odinga-for-african-union-leadership</loc>
+        <lastmod>2024-08-05T02:34:17+00:00</lastmod>
+
+            </url>
+    <url>
+        <loc>http://localhost:8000/article/health-for-all-in-kenya</loc>
+        <lastmod>2024-08-05T02:32:50+00:00</lastmod>
+
+            </url>
+    <url>
+        <loc>http://localhost:8000/tag/frontend</loc>
+    
+            </url>
+    <url>
+        <loc>http://localhost:8000/tag/backend</loc>
+    
+            </url>
+    <url>
+        <loc>http://localhost:8000/article-author/whitney-loice</loc>
+    
+            </url>
+</urlset>

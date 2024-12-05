@@ -1,24 +1,27 @@
 <template>   
-<section class="py-10 bg-[#900000] sm:pt-16 lg:pt-24 dark:border-t dark:bg-black">
+<section class="py-10 bg-red-900 sm:pt-16 lg:pt-24 dark:border-t dark:bg-black">
     <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div class="grid grid-cols-2 gap-x-5 gap-y-12 md:grid-cols-4 md:gap-x-12">
             <div>
-                <p class="text-base text-gray-500">Company</p>
+                <p class="text-base text-gray-500">Pages</p>
 
                 <ul class="mt-8 space-y-4">
                     <li>
-                        <Link :href="route('about.us')" title="" class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"> About </Link>
+                        <Link :href="route('home')" title="Damiko Programming Blog" class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"> Home </Link>
                     </li>
                     <li>
-                        <Link :href="route('contact.us')"  title="" class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">Contact</Link>
+                        <Link :href="route('about.us')" title="About Us" class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"> About </Link>
                     </li>
                     <li>
-                        <Link :href="route('blog')" class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"> 
+                        <Link :href="route('contact.us')"  title="Contact Us" class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">Contact</Link>
+                    </li>
+                    <li>
+                        <Link :href="route('blog')" title="Blog" class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"> 
                             Blog 
                         </Link>
                     </li>
                     <li>
-                        <Link :href="route('private.policy')" class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"> 
+                        <Link :href="route('privacy.policy')" title="Privacy Policy Statement" class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"> 
                             Privacy Policy 
                         </Link>
                     </li>
@@ -30,7 +33,7 @@
 
                 <ul class="mt-8 space-y-4" v-if="categories.length != 0">
                     <li v-for="category in categories" :key="category.id">
-                        <Link :href="category.absolute_url" class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"> 
+                        <Link :href="category.absolute_url" :title="category.name" class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"> 
                             {{ category.name }}
                         </Link>
                     </li>
@@ -70,7 +73,7 @@
                         <a href="#" title="" class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"> Terms & Conditions </a>
                     </li>
                     <li>
-                        <Link :href="route('private.policy')" class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"> Privacy Policy </Link>
+                        <a href="/feed" class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"> RSS </a>
                     </li>
                 </ul>
             </div>

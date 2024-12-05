@@ -25,38 +25,36 @@
                                 <thead
                                     class="text-xs text-white uppercase bg-gray-700 dark:bg-black dark:text-slate-400">
                                     <tr>
-                                        <th scope="col" class="px-6 py-3">
+                                        <th class="px-6 py-3" width="5%">
                                             No
                                         </th>
-                                        <th scope="col" class="px-6 py-3">
+                                        <th class="px-6 py-3" width="20%">
                                             Name
                                         </th>
-                                        <th scope="col" class="px-6 py-3">
+                                        <th class="px-6 py-3" width="40%">
                                             Description
                                         </th>
-                                        <th scope="col" class="px-6 py-3">
+                                        <th class="px-6 py-3" width="20%">
                                             Keywords
                                         </th>
-                                        <th scope="col" class="px-6 py-3">
+                                        <th class="px-6 py-3" width="15%">
                                             Action
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(tag, index) in tags" :key="index"
+                                    <tr v-for="tag in $props.tags" :key="tag.id"
                                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                            {{ index + 1 }}
+                                        <th class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                            {{ tag.id + 1 }}
                                         </th>
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                        <th class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                                             {{ tag.name }}
                                         </th>
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                        <th class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                                             {{ tag.description }}
                                         </th>
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                        <th class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                                             {{ tag.keywords }}
                                         </th>
 

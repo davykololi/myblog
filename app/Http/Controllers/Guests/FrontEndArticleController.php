@@ -18,6 +18,8 @@ use Illuminate\Http\Request;
 use App\Services\ArticleService;
 use App\Services\TagService;
 use Illuminate\Support\Arr;
+use Esign\Breadcrumbs\Breadcrumb;
+use Esign\Breadcrumbs\Facades\Breadcrumbs;
 
 class FrontEndArticleController extends Controller
 {
@@ -34,13 +36,14 @@ class FrontEndArticleController extends Controller
         $this->appMail = 'damiko.co.org';
         $this->appName = config('app.name');
         $this->tel = '+254724351952';
+        $this->robots = 'index, follow';
     }
 
     // Category Articles
     public function categoryArticles($slug,Request $request)
     { 
         $category = Category::whereSlug($slug)->eagerLoaded()->firstOrFail();
-        $articles = $category->articles()->eagerLoaded()->published()->latest('id')->get();
+        $categoryArticles = $category->articles()->eagerLoaded()->published()->latest('id')->get();
         $asides = $category->articles()->latest('id')->published()->eagerLoaded()->limit(10)->get();
         $all = Article::published()->eagerLoaded();
         $articles = $all->inRandomOrder()->limit(10)->get();
@@ -49,6 +52,7 @@ class FrontEndArticleController extends Controller
         $sameAs = 'https://www.damiko.com/category/'.$category->slug;
         $site_creator = config('constants.site_creator');
         $site_type = 'Articles';
+        $canonical_url = route('blog');
 
         $categorySchema = Schema::Article()
                 ->articleSection($category->name)
@@ -62,13 +66,24 @@ class FrontEndArticleController extends Controller
 
         $catSchemaOrg = $categorySchema->toArray();
 
+
+        $breadcrumb = Breadcrumbs::add([
+                                    Breadcrumb::create('Home', route('home')),
+                                    Breadcrumb::create('Blog', route('blog')),
+                                    Breadcrumb::create(ucwords($category->name." "."Articles")),
+                                ]);
+        $categoryJsonLdBreadcrumb = $breadcrumb->toJsonLd();
+
         $data = [
             'category' => fn() => $category,
-            'articles' => fn() => $articles,
+            'categoryArticles' => fn() => $categoryArticles,
             'sameAs' => $sameAs,
             'site_creator' => $site_creator,
             'site_type' => $site_type,
+            'canonical_url' => $canonical_url,
+            'robots' => $this->robots,
             'catSchemaOrg' =>$catSchemaOrg,
+            'categoryJsonLdBreadcrumb' => $categoryJsonLdBreadcrumb,
         ];
 
         return Inertia::render('Guests/Category/Articles',$data);
@@ -79,18 +94,20 @@ class FrontEndArticleController extends Controller
         Article::where('slug',$slug)->published()->firstOrFail()->increment('total_views');
         $article = Article::where('slug',$slug)->published()->eagerLoaded()->firstOrFail();
         $all = Article::published()->eagerLoaded();
-        $articles = $all->whereNotIn('id',[$article->id])->where('category_id',$article->category_id)->inRandomOrder()->get();
+        $featuredArticles = $all->inRandomOrder()->whereNotIn('id',[$article->id])->limit('10')->get();
+        $categoryArticles = $all->whereNotIn('id',[$article->id])->where('category_id',$article->category_id)->inRandomOrder()->get();
         $articlesAside = $all->whereNotIn('id',[$article->id])->latest('id')->limit(10)->get();
         $asides = $article->category->articles()->published()->whereNotIn('id',[$article->id])->inRandomOrder()->eagerLoaded()->limit(10)->get();
         $articleTags = $article->tags;
         $comments = $article->comments()->latest('id')->get();
         $tagsNames = $article->tags()->pluck('name');
-        $tagsNamesArray = collect($tagsNames->toArray());
+        $tagsNamesArray = collect($tagsNames->toArray())->implode(',');
 
         $sameAs = "https://www.damiko.com/article/".$article->slug;
         $imageHeight = "628";
         $imageWidth = '1200';
         $site_type = 'Article';
+        $canonical_url = route('blog');
         $site_name = config('app.name');
         $twitter_card = 'summary_large_image';
         $address = 'P.O Box 688, Bungoma, Kenya';
@@ -126,19 +143,34 @@ class FrontEndArticleController extends Controller
                                                 ->reddit()
                                                 ->telegram()
                                                 ->render();
+
+        $breadcrumb = Breadcrumbs::add([
+                                    Breadcrumb::create('Home', route('home')),
+                                    Breadcrumb::create('Blog', route('blog')),
+                                    Breadcrumb::create(ucwords($article->category->name." "."Articles"), route('category.articles',['slug'=>$article->category->slug])),
+                                    Breadcrumb::create(ucwords($article->title)),
+                                ]);
+        $articleJsonLdBreadcrumb = $breadcrumb->toJsonLd();
+
+
         $data = [
                 'article' => fn() => $article,
-                'articles' => fn() => $articles,
+                'featuredArticles' => fn() => $featuredArticles,
+                'categoryArticles' => fn() => $categoryArticles,
                 'articlesAside' => fn() => $articlesAside,
+                'tagsNamesArray' => fn() => $tagsNamesArray,
                 'comments' => fn() => $comments,
                 'sameAs' => $sameAs,
                 'imageHeight' => $imageHeight,
                 'imageWidth' => $imageWidth,
                 'site_type' => $site_type,
                 'site_name' => $site_name,
+                'canonical_url' => $canonical_url,
+                'robots' => $this->robots,
                 'twitter_card' => $twitter_card,
                 'shareComponent' => $shareComponent,
                 'artSchemaOrg' => $artSchemaOrg,
+                'articleJsonLdBreadcrumb' => $articleJsonLdBreadcrumb,
             ];
 
         return Inertia::render('Guests/Article/Details',$data);
@@ -147,7 +179,7 @@ class FrontEndArticleController extends Controller
     public function tagArticles($slug,Request $request)
     {
         $tag = Tag::whereSlug($slug)->eagerLoaded()->firstOrFail();
-        $articles = $tag->articles()->published()->eagerLoaded()->latest('id')->get();
+        $tagArticles = $tag->articles()->published()->eagerLoaded()->latest('id')->get();
         $asides = $tag->articles()->published()->latest('id')->eagerLoaded()->take(10)->get();
         $all = Article::published()->eagerLoaded();
         $articles = $all->inRandomOrder()->limit(10)->get();
@@ -156,6 +188,7 @@ class FrontEndArticleController extends Controller
         $sameAs = 'https://www.damiko.com/tag/'.$tag->slug;
         $site_creator = config('constants.site_creator');
         $site_type = 'Articles';
+        $canonical_url = route('blog');
 
         $tagSchema = Schema::Article()
                 ->headline($tag->name)
@@ -169,13 +202,24 @@ class FrontEndArticleController extends Controller
 
         $tagSchemaOrg = $tagSchema->toArray();
 
+        $breadcrumb = Breadcrumbs::add([
+                                    Breadcrumb::create('Home', route('home')),
+                                    Breadcrumb::create('Blog', route('blog')),
+                                    Breadcrumb::create(ucwords($tag->name." "."Articles")),
+                                ]);
+        $tagJsonLdBreadcrumb = $breadcrumb->toJsonLd();
+
         $data = [
-                'tag' => fn() => $tag,
                 'articles' => fn() => $articles,
+                'tag' => fn() => $tag,
+                'tagArticles' => fn() => $tagArticles,
                 'sameAs' => $sameAs,
                 'site_creator' => $site_creator,
                 'site_type' => $site_type,
+                'canonical_url' => $canonical_url,
+                'robots' => $this->robots,
                 'tagSchemaOrg' => $tagSchemaOrg,
+                'tagJsonLdBreadcrumb' => $tagJsonLdBreadcrumb,
             ];
 
         return Inertia::render('Guests/Tag/Articles',$data);
@@ -184,7 +228,7 @@ class FrontEndArticleController extends Controller
     public function authorArticles($slug,Request $request)
     {
         $author = User::where('assigned_role','author')->whereSlug($slug)->eagerLoaded()->firstOrFail();
-        $articles = $author->articles()->published()->latest('id')->eagerLoaded()->get();
+        $authorArticles = $author->articles()->published()->latest('id')->eagerLoaded()->get();
         $asides = $author->articles()->published()->latest('id')->eagerLoaded()->limit(10)->get();
         $categories = categories();
         $tags = Tag::eagerLoaded()->get();
@@ -195,6 +239,7 @@ class FrontEndArticleController extends Controller
         $sameAs = 'https://www.damiko.com/author-articles/'.$author->slug;
         $site_creator = config('constants.site_creator');
         $site_type = 'Articles';
+        $canonical_url = route('blog');
 
         $authorSchema = Schema::Person()
                 ->name($author->name)
@@ -209,13 +254,23 @@ class FrontEndArticleController extends Controller
 
         $authorSchemaOrg =  $authorSchema->toArray();
 
+        $breadcrumb = Breadcrumbs::add([
+                                    Breadcrumb::create('Home', route('home')),
+                                    Breadcrumb::create('Blog', route('blog')),
+                                    Breadcrumb::create(ucwords($author->name." "."Articles")),
+                                ]);
+        $authorJsonLdBreadcrumb = $breadcrumb->toJsonLd();
+
         $data = [
                 'author' => fn() => $author,
-                'articles' => fn() => $articles,
+                'authorArticles' => fn() => $authorArticles,
                 'sameAs' => $sameAs,
                 'site_creator' => $site_creator,
                 'site_type' => $site_type,
+                'canonical_url' => $canonical_url,
+                'robots' => $this->robots,
                 'authorSchemaOrg' => $authorSchemaOrg,
+                'authorJsonLdBreadcrumb' => $authorJsonLdBreadcrumb,
             ];
 
         return Inertia::render('Guests/Author/Articles',$data);

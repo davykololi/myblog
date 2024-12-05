@@ -59,6 +59,8 @@ class HandleInertiaRequests extends Middleware
             'sidebarArticles' => Article::with('category','user')->published()->latest('id')->limit(50)->get(),
             'tags' => Tag::with('articles')->get(),
             'year' => date('Y'),
+            'breadcrumbs' => $request->route()->breadcrumbs()->toArray(),
+            'currentRoute' => $request->route(),
         ];
     }
 }

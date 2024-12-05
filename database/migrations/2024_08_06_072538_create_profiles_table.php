@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('x_link')->nullable();
             $table->string('linkedin_link')->nullable();
             $table->string('instagram_link')->nullable();
+            $table->string('twitter_site')->nullable();
+            $table->string('user_info')->nullable();
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });

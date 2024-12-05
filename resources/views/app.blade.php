@@ -9,8 +9,6 @@
         <meta name="developer:email" :content="kololimdavid@gmail.com">
         <meta name="designer" :content="David Misiko Kololi">
         <meta name="fb:app_id" :content="90876954">
-        <meta name="robots" :content="index,follow">
-        <meta name="googlebot" :content="index,follow">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -18,9 +16,8 @@
         
         <link rel="stylesheet" href="{{ asset('css/share-buttons.css') }}">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
         <!-- ========== Favicon Icon ========== -->
-        <link rel="shortcut icon" href="{{ asset('static/logo.svg') }}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ asset('static/my-logo.png') }}" type="image/x-icon">
 
         <!-- Scripts -->
         @routes
@@ -44,7 +41,7 @@
     </button>
     </body>
     <!-- Dark mode toggle -->
-    <script>
+    <script defer>
         // On page load or when changing themes, best to add inline in `head` to avoid FOUC
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
@@ -66,7 +63,7 @@
     </script>
 
     <!-- Javascript code -->
-    <script>
+    <script defer>
         var toTopButton = document.getElementById("to-top-button");
 
         // When the user scrolls down 200px from the top of the document, show the button
@@ -85,5 +82,5 @@
     </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
-<script src="{{ asset('js/share-buttons.jquery.js') }}"></script>
+    <script src="{{ asset('js/share-buttons.jquery.js') }}" defer></script>
 </html>

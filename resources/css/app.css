@@ -26,15 +26,11 @@
 	}
 
 	.sidebar-wrap {
-		@apply mt-0.5 h-fit bg-yellow-100 dark:bg-stone-800 md:h-fit lg:h-fit md:w-4/12 lg:w-4/12 sticky top-[120px] shadow-lg;
+		@apply -mt-2 md:mt-0.5 border border-t md:border-none lg:mt-0.5 h-fit bg-red-800 dark:bg-slate-900 md:h-fit lg:h-fit md:w-4/12 lg:w-4/12 sticky top-[120px] shadow-lg;
 	}
 
 	.mainpage-wrap {
-		@apply mt-0.5 md:w-8/12 lg:w-8/12 bg-yellow-100 dark:bg-stone-800 dark:text-slate-400 shadow-lg min-h-screen;
-	}
-
-	.sidebar-h2 {
-		@apply text-red-700 dark:text-slate-400 font-bold;
+		@apply mt-0.5 md:w-8/12 lg:w-8/12 bg-gray-50 dark:bg-slate-900 dark:text-slate-400 shadow-lg min-h-screen;
 	}
 
 	.danger {
@@ -42,7 +38,7 @@
 	}
 
 	.auth-wrap {
-		@apply w-full h-auto md:w-4/12 lg:w-4/12 mx-auto shadow-md h-auto my-16 border px-16 py-12 bg-white border border-red-500 dark:bg-stone-700 dark:text-slate-200;
+		@apply w-full h-auto md:w-4/12 lg:w-4/12 mx-auto shadow-md h-auto my-16 border px-16 py-12 bg-red-800 border dark:bg-stone-700 dark:text-slate-200;
 	}
 
 	.sidebar-tags {
@@ -54,10 +50,14 @@
 	}
 
 	.frontend-title {
-		@apply animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent text-4xl font-bold uppercase;
+		@apply text-transparent text-red-800 text-4xl font-bold uppercase my-2;
 	}
 
 	.back-button {
 		@apply bottom-8 right-8 border-0 w-16 h-16 rounded-full drop-shadow-md bg-red-500 dark:bg-stone-700 text-white text-3xl font-bold;
+	}
+
+	.block-articles {
+		@apply w-full my-2 text-red-700 text-3xl font-extrabold text-center uppercase;
 	}
 }

@@ -41,6 +41,12 @@
 
                                 <InputError class="mt-2" :message="form.errors.caption" />
                             </div>
+
+                            <div class="mt-4">
+                                <Editor v-model="form.content"/>
+                                <div v-if="form.errors.content" class="danger">{{ form.errors.content }}</div>
+                            </div>
+
                             <div>
                                 <InputLabel for="keywords" value="Keywords" class="dark:text-slate-400"/>
 
@@ -50,7 +56,6 @@
                             </div>
                             
                             <div>
-                                <img v-if="imagePreviewUrl" :src="imagePreviewUrl" class="max-w-xs max-h-xs mt-4" alt="Image preview"/>
                                 <input id="file-upload" name="image" type="file" @change="form.image = $event.target.files[0]" />
                                 <div v-if="form.errors.image" class="danger">{{ form.errors.image }}</div>
                             </div>
@@ -63,24 +68,6 @@
                               </option>
                             </select>
                             <div v-if="form.errors.category_id" class="danger">{{ form.errors.category_id }}</div>
-
-                            <div class="py-12">
-                              <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                                <div class="bg-white p-4 overflow-hidden shadow-xl sm:rounded-lg">
-                                  <editor api-key="no-api-key" :init="{
-                                      menubar: false,
-                                      content_css: false, skin: false, content_style: contentUiSkinCss.toString() + '\n' + contentCss.toString(), height: 500, menubar: false,
-                                    plugins: [
-                                        'link', 'lists','image', 'anchor', 'wordcount', 'media','quickbars, emoticons, table','advList','autolink','charmap','preview','pagebreak','searchreplace'
-                                      ],
-                                    toolbar:
-                                        'undo redo | formatselect| styles | bold italic underline | alignleft aligncenter alignright alignjustify | ' + 'bullist numlist outdent indent | blockquote | link image | print preview media fullscreen | ' + 'forecolor backcolor emoticons | code | table| codesample | help'
-                                  }" v-model="form.content"/>
-
-                                    <div v-if="form.errors.content" class="danger">{{ form.errors.content }}</div>
-                                </div>
-                              </div>
-                            </div>
 
                             <div>
                               <select v-model="form.tags" name="tags[]" class="form-multiselect block w-full mt-1" multiple>
@@ -121,44 +108,9 @@ import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import AuthorAuthenticatedLayout from '@/Layouts/AuthorAuthenticatedLayout.vue';
-import { Head, useForm, Link } from '@inertiajs/vue3';
-import { ref } from 'vue';
-
-import tinymce from 'tinymce/tinymce';
-// Default icons are required for TinyMCE 5.3 or above
-import 'tinymce/icons/default';
-
-/* Required TinyMCE components */
-import 'tinymce/themes/silver';
-
-/* Import a skin (can be a custom skin instead of the default) */
-import 'tinymce/skins/ui/oxide/skin.css';
-
-// Any plugins you want to use has to be imported
-import 'tinymce/plugins/link';
-import 'tinymce/plugins/lists';
-import 'tinymce/plugins/image';
-import 'tinymce/plugins/anchor';
-import 'tinymce/plugins/wordcount';
-import 'tinymce/plugins/media';
-
-import 'tinymce/plugins/advList';
-import 'tinymce/plugins/autolink';
-import 'tinymce/plugins/charmap';
-import 'tinymce/plugins/preview';
-import 'tinymce/plugins/pagebreak';
-import 'tinymce/plugins/searchreplace';
-
-import 'tinymce/plugins/emoticons';
-import 'tinymce/plugins/emoticons/js/emojis.js';
-import 'tinymce/plugins/table';
-import 'tinymce/plugins/quickbars';
-
-/* content UI CSS is required */
-import contentUiSkinCss from 'tinymce/skins/ui/oxide/content.css?inline';
-
-/* The default content CSS can be changed or replaced with appropriate CSS for the editor content. */
-import contentCss from 'tinymce/skins/content/default/content.css?inline';
+import Editor from '@/Partials/Tiptap/Editor.vue';
+import { Link, Head, useForm } from '@inertiajs/vue3';
+import { ref, reactive } from 'vue';
 
 const props = defineProps({
     title: String,

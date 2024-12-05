@@ -10,14 +10,11 @@
 
   <div class="max-w-screen">
 
-  <div>
-    <Messages/>
-  </div>
-
   <div class="pt-8 mb-12 block">
     <Link :href="route('author.articles.create')"> 
       <button class="primary-button" style="float:right">Create</button>
     </Link>
+    <Messages/>
   </div>
 
   <div class="w-full">
@@ -33,7 +30,7 @@
       </tr>
     </thead>
     <tbody v-if="props.articles.data.length != 0">
-      <tr v-for="(article, index) in props.articles.data" :key="index" class="bg-white border-b dark:border-neutral-500 dark:text-slate-400 dark:bg-slate-800 px-4 md:px-8">
+      <tr v-for="article in $props.articles.data" :key="article.id" class="bg-white border-b dark:border-neutral-500 dark:text-slate-400 dark:bg-slate-800 px-4 md:px-8">
         <td class="px-2">{{ index + 1 }}</td>
         <td class="px-2">{{ article.title }}</td>
         <td class="px-2"><img :src="article.image_url" :alt="article.title" style="width:60%"/></td>
@@ -41,14 +38,18 @@
         <td class="px-2">{{ article.published }}</td>
         <td class="flex flex-row space-x-1 px-2">
         <Link :href="route('author.articles.show', article.id)">
-          <SecondaryButtonTwo>Details</SecondaryButtonTwo>
+          <v-btn flat icon color="green lighten-2">
+            <v-icon>view</v-icon>
+          </v-btn>
         </Link>
         <Link :href="route('author.articles.edit', article.id)">
-          <PrimaryButtonTwo>Edit</PrimaryButtonTwo>
+          <v-btn flat icon color="blue lighten-2">
+            <v-icon>edit</v-icon>
+          </v-btn>
         </Link>
-        <PrimaryButton class="bg-red-700" @click="destroy(article.id)">
-          Delete
-        </PrimaryButton>
+        <v-btn flat icon color="red lighten-2" @click="destroy(article.id)">
+          <v-icon>delete_forever</v-icon>
+        </v-btn>
         </td>
       </tr>
     </tbody>
@@ -60,7 +61,7 @@
       </tr>
     </tfoot>
   </table>
-  <Pagination :data="props.articles" class="mt-4"/>
+  <Pagination :data="$props.articles" class="mt-4"/>
   </div>
   </div>
 

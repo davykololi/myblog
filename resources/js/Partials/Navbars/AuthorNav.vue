@@ -146,7 +146,6 @@ import { computed } from 'vue';
 const author = computed(() => page.props.auth.user.assigned_role === 'author');
 
 const refresh = async() => {
-    await location.reload();
-    await location.replace('http://localhost:8000/');
+    const res = await location.replace('/');
 };
 </script>

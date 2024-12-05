@@ -10,7 +10,7 @@ import AuthorFooter from '@/Partials/Footers/AuthorFooter.vue';
 <template>
     <div v-if="AuthAuthor">
         <div class="bg-gray-100">
-            <author-nav/>
+            <AuthorNav/>
 
             <!-- Page Heading -->
             <header class="bg-white shadow-md dark:bg-stone-600" v-if="$slots.header">
@@ -20,7 +20,7 @@ import AuthorFooter from '@/Partials/Footers/AuthorFooter.vue';
             </header>
 
             <!-- Page Content -->
-            <main class="bg-gray-300 text-gray-700 dark:bg-slate-900 dark:text-slate-400">
+            <div class="bg-gray-300 text-gray-700 dark:bg-slate-900 dark:text-slate-400">
                 <div class="max-w-screen h-fit md:min-h-screen lg:min-h-screen">
                     <div class="w-full">
                         <div class="mx-2 md:mx-4 lg:mx-8">
@@ -28,9 +28,9 @@ import AuthorFooter from '@/Partials/Footers/AuthorFooter.vue';
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
 
-            <author-footer/>
+            <AuthorFooter/>
         </div>
     </div>
 </template>

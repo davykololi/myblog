@@ -10,7 +10,7 @@ import EditorFooter from '@/Partials/Footers/EditorFooter.vue';
 <template>
     <div v-if="AuthEditor">
         <div class="min-h-screen bg-gray-100">
-            <editor-nav/>
+            <EditorNav/>
 
             <!-- Page Heading -->
             <header class="bg-white shadow-md dark:bg-stone-600 dark:text-slate-400" v-if="$slots.header">
@@ -20,7 +20,7 @@ import EditorFooter from '@/Partials/Footers/EditorFooter.vue';
             </header>
 
             <!-- Page Content -->
-            <main class="bg-gray-300 dark:bg-slate-900 dark:text-slate-400">
+            <div class="bg-gray-300 dark:bg-slate-900 dark:text-slate-400">
                 <div class="max-w-screen h-fit md:min-h-screen lg:min-h-screen">
                     <div class="w-full">
                         <div class="mx-2 md:mx-4 lg:mx-8">
@@ -28,9 +28,9 @@ import EditorFooter from '@/Partials/Footers/EditorFooter.vue';
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
             
-            <editor-footer/>
+            <EditorFooter/>
         </div>
     </div>
 </template>

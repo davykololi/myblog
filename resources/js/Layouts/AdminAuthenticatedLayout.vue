@@ -10,7 +10,7 @@ import AdminFooter from '@/Partials/Footers/AdminFooter.vue';
 <template>
     <div v-if="AuthAdmin">
         <div class="min-h-screen bg-gray-100">
-            <admin-nav/>
+            <AdminNav/>
 
             <!-- Page Heading -->
             <header class="bg-blue-700 text-white shadow dark:bg-stone-600 dark:text-slate-400" v-if="$slots.header">
@@ -20,7 +20,7 @@ import AdminFooter from '@/Partials/Footers/AdminFooter.vue';
             </header>
 
             <!-- Page Content -->
-            <main class="bg-gray-300 dark:bg-slate-900">
+            <div class="bg-gray-300 dark:bg-slate-900">
                 <div class="max-w-screen h-fit md:min-h-screen lg:min-h-screen">
                     <div class="w-full">
                         <div class="mx-2 md:mx-4 lg:mx-8">
@@ -28,9 +28,9 @@ import AdminFooter from '@/Partials/Footers/AdminFooter.vue';
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
 
-            <admin-footer/>
+            <AdminFooter/>
         </div>
     </div>
 </template>

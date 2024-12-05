@@ -40,10 +40,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(editor, index) in editors" :key="index"
+                                    <tr v-for="editor in $props.editors" :key="editor.id"
                                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                            {{ index + 1 }}
+                                            {{ editor.id + 1 }}
                                         </th>
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                                             {{ editor.name }}

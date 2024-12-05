@@ -10,6 +10,8 @@ use Spatie\SchemaOrg\Schema;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Esign\Breadcrumbs\Breadcrumb;
+use Esign\Breadcrumbs\Facades\Breadcrumbs;
 
 class BlogController extends Controller
 {
@@ -26,6 +28,7 @@ class BlogController extends Controller
         $this->tel = config('constants.telephone');
         $this->appAddress = config('constants.postAddress');
         $this->postalCode = config('constants.postalCode');
+        $this->robots = 'index, follow';
     }
     /**
      * Handle the incoming request.
@@ -38,15 +41,16 @@ class BlogController extends Controller
         //
         $search = $request->has('search');
         if($search){
-            $articles = Article::published()->search($request->search)->get();
+            $blogArticles = Article::published()->search($request->search)->get();
         }else{
-            $articles = Article::query()->published()->eagerLoaded()->latest('id')->get();
+            $blogArticles = Article::query()->published()->eagerLoaded()->latest('id')->get();
             $articlesAside = Article::published()->latest('id')->eagerLoaded()->limit(10)->get();
 
             $title = 'Blog';
             $description = 'The web and mobile app development blog in Kenya';
             $keywords = 'Damiko Technologies Blog, blog, programming blog, web application blog, mobile application blog, web development blog, mobile apps development blog';
             $canonical_url = route('blog');
+            $robots = $this->robots;
             $site_type = 'Website';
             $site_url = $canonical_url;
             $site_secure_url = $canonical_url;
@@ -67,13 +71,20 @@ class BlogController extends Controller
                     ->logo(Schema::ImageObject()->url($this->appLogo));
             $bschema = $webSite->toArray();
 
+            $breadcrumb = Breadcrumbs::add([
+                                    Breadcrumb::create('Home', route('home')),
+                                    Breadcrumb::create('Blog'),
+                                ]);
+            $blogJsonLdBreadcrumb = $breadcrumb->toJsonLd();
+
             $data = [
-                'articles' => fn() => $articles,
+                'blogArticles' => fn() => $blogArticles,
                 'articlesAside' => fn() => $articlesAside,
                 'title' => $title,
                 'description' => $description,
                 'keywords' => $keywords,
                 'canonical_url' => $canonical_url,
+                'robots' => $robots,
                 'site_type' => $site_type,
                 'site_url' => $site_url,
                 'site_secure_url' => $site_secure_url,
@@ -81,6 +92,7 @@ class BlogController extends Controller
                 'twitter_card' => $twitter_card,
                 'site_creator' => $site_creator,
                 'bschema' => $bschema,
+                'blogJsonLdBreadcrumb' => $blogJsonLdBreadcrumb,
             ];
 
             return Inertia::render('Guests/Blog',$data);

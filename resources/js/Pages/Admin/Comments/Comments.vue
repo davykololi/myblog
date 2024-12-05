@@ -38,10 +38,10 @@
                                     </tr>
                                 </thead>
                                 <tbody v-if="comments.length != 0">
-                                    <tr v-for="(comment, index) in comments" :key="index"
+                                    <tr v-for="comment in $props.comments" :key="comment.id"
                                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                            {{ index + 1 }}
+                                            {{ comment.id + 1 }}
                                         </th>
                                         <th scope="row"
                                             class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">

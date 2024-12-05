@@ -1,17 +1,15 @@
 <template> 
-<Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0" leave-active-class="transition ease-in-out" leave-to-class="opacity-0">       
-        <div v-if="$page.props.flash.message" class="animate-pulse" role="alert">
-                <p class="secondary-button">{{ $page.props.flash.message }}</p>
+        <div v-if="$page.props.flash.message" class="animate-pulse mx-8">
+                <v-alert color="green">{{ $page.props.flash.message }}</v-alert>
         </div>
-</Transition>
 
-<Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0" leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
-        <div v-if="$page.props.flash.error" class="animate-pulse" role="alert">
-                <p class="danger-button">{{ $page.props.flash.error }}</p>
+        <div v-if="$page.props.flash.error" class="animate-pulse">
+                <v-alert color="green">{{ $page.props.flash.error }}</v-alert>
         </div>
-</Transition>
 </template>
+
 <script setup>
 
 </script>
+
 

@@ -82,27 +82,7 @@
                                     </div>
                                 </div>
 
-                                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12 md:grid-cols-6 lg:grid-cols-6">
-                                    <div class="sm:col-span-12 md:col-span-12 lg:col-span-12">
-                                        <label for="content" class="block text-sm font-medium leading-6 text-gray-900">Content</label>
-                                        <div class="mt-2">
-                                            <editor api-key="no-api-key" :init="{
-                                              menubar: false,
-                                              content_css: false, 
-                                              skin: false, 
-                                              content_style: contentUiSkinCss.toString() + '\n' + contentCss.toString(), 
-                                              height: 500, 
-                                              menubar: false,
-                                              plugins: [
-                                                'link', 'lists','image', 'anchor', 'wordcount', 'media','quickbars, emoticons, table','advList','autolink','charmap','preview','pagebreak','searchreplace','code',
-                                              ],
-                                              toolbar:
-                                                'undo redo | casechange blocks |formatselect| styles | bold italic underline | alignleft aligncenter alignright alignjustify | ' + 'bullist numlist outdent indent | blockquote | link image | print preview media fullscreen | ' + 'forecolor backcolor emoticons | code | table| codesample | help'
-                                              }" v-model="form.content" initial-value="Welcome To TinyMCE Vue"/>
-                                            <div v-if="form.errors.content" class="danger">{{ form.errors.content }}</div>
-                                        </div>
-                                    </div>
-
+                                <div>
                                     <div class="sm:col-span-12 md:col-span-3">
                                         <label for="tags" class="block text-sm font-medium leading-6 text-gray-900">Tags</label>
                                         <div class="mt-2">
@@ -117,6 +97,11 @@
                                             <div v-if="form.errors.tags" class="danger">{{ form.errors.tags }}</div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="mt-4">
+                                    <Editor v-model="form.content"/>
+                                    <div v-if="form.errors.content" class="danger">{{ form.errors.content }}</div>
                                 </div>
 
                                     <div class="mx-4 md:mx-8">
@@ -145,49 +130,13 @@ import SecondaryButtonTwo from "@/Partials/CustomButtons/SecondaryButtonTwo.vue"
 import SubmitButton from "@/Partials/CustomButtons/SubmitButton.vue";
 import AuthorAuthenticatedLayout from '@/Layouts/AuthorAuthenticatedLayout.vue';
 import Messages from "@/Partials/Messages/Messages.vue";
+import Editor from '@/Partials/Tiptap/Editor.vue';
 import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
-import {ref, watch} from 'vue';
-const page = usePage();
+import {ref, reactive} from 'vue';
 import { computed } from 'vue';
+
+const page = usePage();
 const authUser = computed(() => page.props.auth.user.name);
-
-import tinymce from 'tinymce/tinymce';
-// Default icons are required for TinyMCE 5.3 or above
-import 'tinymce/icons/default';
-
-/* Required TinyMCE components */
-import 'tinymce/themes/silver';
-
-/* Import a skin (can be a custom skin instead of the default) */
-import 'tinymce/skins/ui/oxide/skin.css';
-
-// Any plugins you want to use has to be imported
-import 'tinymce/plugins/link';
-import 'tinymce/plugins/lists';
-import 'tinymce/plugins/image';
-import 'tinymce/plugins/anchor';
-import 'tinymce/plugins/wordcount';
-import 'tinymce/plugins/media';
-
-import 'tinymce/plugins/advList';
-import 'tinymce/plugins/autolink';
-import 'tinymce/plugins/charmap';
-import 'tinymce/plugins/preview';
-import 'tinymce/plugins/pagebreak';
-import 'tinymce/plugins/searchreplace';
-
-import 'tinymce/plugins/emoticons';
-import 'tinymce/plugins/emoticons/js/emojis.js';
-import 'tinymce/plugins/table';
-import 'tinymce/plugins/quickbars';
-import 'tinymce/plugins/code';
-
-/* content UI CSS is required */
-import contentUiSkinCss from 'tinymce/skins/ui/oxide/content.css?inline';
-
-/* The default content CSS can be changed or replaced with appropriate CSS for the editor content. */
-import contentCss from 'tinymce/skins/content/default/content.css?inline';
-
 
 const props = defineProps({
   title: String,
@@ -211,5 +160,6 @@ const submit = () => {
 };
 
 </script>
+
 <style src="@vueform/multiselect/themes/default.css"></style>
 <style lang="scss" scoped></style>

@@ -44,11 +44,11 @@ class GenerateSitemap extends Command
      */
     public function handle()
     {
-        $homeUrl = URL::create(route('home'))->setLastModificationDate(Carbon::yesterday())->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY);
-        $contactUrl = URL::create(route('contact.us'))->setLastModificationDate(Carbon::yesterday())->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY);
-        $aboutUrl = URL::create(route('about.us'))->setLastModificationDate(Carbon::yesterday())->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY);
-        $policyUrl = URL::create(route('private.policy'))->setLastModificationDate(Carbon::yesterday())->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY);
-        $blogUrl = URL::create(route('blog'))->setLastModificationDate(Carbon::yesterday())->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY);
+        $homeUrl = URL::create('/')->setLastModificationDate(Carbon::yesterday())->setPriority(0.1)->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY);
+        $contactUrl = URL::create('/contact-us')->setLastModificationDate(Carbon::yesterday())->setPriority(0.1)->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY);
+        $aboutUrl = URL::create('/about-us')->setLastModificationDate(Carbon::yesterday())->setPriority(0.1)->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY);
+        $policyUrl = URL::create('/privacy-policy')->setLastModificationDate(Carbon::yesterday())->setPriority(0.1)->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY);
+        $blogUrl = URL::create('/blog')->setLastModificationDate(Carbon::yesterday())->setPriority(0.1)->setChangeFrequency(Url::CHANGE_FREQUENCY_ALWAYS);
 
         $sitemap = Sitemap::create()
             ->add($homeUrl)
@@ -71,12 +71,12 @@ class GenerateSitemap extends Command
 
         $tags = Tag::all();
         foreach($tags as $tag){
-            $sitemap->add(Url::create($tag->absolute_url));
+            $sitemap->add(Url::create($tag->absolute_url)->setLastModificationDate($tag->updated_at)->setPriority(0.9));
         }
 
         $authors = User::where('assigned_role','author')->get();
         foreach($authors as $author){
-            $sitemap->add(Url::create($author->absolute_url));
+            $sitemap->add(Url::create($author->absolute_url)->setLastModificationDate($author->updated_at)->setPriority(0.9));
         }
         
         $sitemap->writeToFile(public_path('sitemap.xml'));      

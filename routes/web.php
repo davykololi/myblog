@@ -18,14 +18,15 @@ use App\Http\Controllers\Guests\PagesController;
 use App\Http\Controllers\Guests\BlogController;
 use App\Http\Controllers\Guests\CommentController;
 use App\Http\Controllers\Guests\FrontEndArticleController;
+use App\Http\Controllers\Guests\NewsLetterController;
 
 
 Route::controller(PagesController::class)->group(function(){
-   Route::get('/', 'welcome')->name('home');
-   Route::get('/about-us', 'about')->name('about.us'); 
-   Route::get('/contact-us', 'contact')->name('contact.us');
+   Route::get('/', 'welcome')->name('home')->breadcrumb('Home');
+   Route::get('/about-us', 'about')->name('about.us')->breadcrumb('About Us', 'home'); 
+   Route::get('/contact-us', 'contact')->name('contact.us')->breadcrumb('Contact Us', 'home');
    Route::post('/contact-us', 'contactStore')->name('contact.store');
-   Route::get('/private-policy', 'policy')->name('private.policy');
+   Route::get('/privacy-policy', 'policy')->name('privacy.policy')->breadcrumb('Privacy Policy Statement', 'home');
 });
 
 Route::controller(CommentController::class)->group(function(){
@@ -33,14 +34,17 @@ Route::controller(CommentController::class)->group(function(){
    Route::post('/comment', 'articleComment')->name('save.comment'); 
 });
 
-Route::get('/blog', [BlogController::class, 'blog'])->name('blog');
+Route::get('/blog', [BlogController::class, 'blog'])->name('blog')->breadcrumb('Blog', 'home');
 
 Route::controller(FrontEndArticleController::class)->group(function(){
-    Route::get('/category/{slug}/', 'categoryArticles')->name('category.articles');
-    Route::get('/article/{slug}/', 'articleDetails')->name('article.details');
-    Route::get('/tag/{slug}/', 'tagArticles')->name('tag.articles');
-    Route::get('/article-author/{slug}/', 'authorArticles')->name('author.articles');
+    Route::get('/category/{slug}/', 'categoryArticles')->name('category.articles')->breadcrumb(fn($category) => $category, 'blog');
+    Route::get('/article/{slug}/', 'articleDetails')->name('article.details')->breadcrumb(fn($article) => ucwords($article), 'blog');
+    Route::get('/tag/{slug}/', 'tagArticles')->name('tag.articles')->breadcrumb(fn($tag) => $tag, 'blog');
+    Route::get('/article-author/{slug}/', 'authorArticles')->name('author.articles')->breadcrumb(fn($author) => ucwords($author), 'blog');
 });
+
+//Newsletter route
+Route::post('/newsletter/store', [NewsLetterController::class, 'store'])->name('newsletter.store');
 
 //Authorization route
 Route::middleware('auth')->group(function () {

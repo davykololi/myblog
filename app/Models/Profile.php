@@ -12,7 +12,7 @@ class Profile extends Model
 
     protected $table = 'profiles';
     protected $primaryKey = 'id';
-    protected $fillable = ['avatar','country','city','postal_address','postal_code','facebook_link','x_link','linkedin_link','instagram_link','user_id'];
+    protected $fillable = ['avatar','country','city','postal_address','postal_code','facebook_link','x_link','linkedin_link','instagram_link','twitter_site','user_info','user_id'];
 
     public function user()
     {

@@ -4,22 +4,28 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+const authUser = computed(() => page.props.auth.user)
 
-defineProps({
-    mustVerifyEmail: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
+const props = defineProps({
+    user: Object,
 });
-
-const user = usePage().props.auth.user;
 
 const form = useForm({
-    name: user.name,
-    email: user.email,
+    name: props.user.name,
+    email: props.user.email,
+    avatar: "",
+    country: "",
+    city: "",
+    postal_address: "",
+    postal_code: "",
+    facebook_link: "",
+    x_link: "",
+    linkedin_link: "",
+    instagram_link: "",
+    twitter_site: "",
 });
+
 </script>
 
 <template>
@@ -64,26 +70,162 @@ const form = useForm({
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-            <div v-if="mustVerifyEmail && user.email_verified_at === null">
-                <p class="text-sm mt-2 text-gray-800">
-                    Your email address is unverified.
-                    <Link
-                        :href="route('verification.send')"
-                        method="post"
-                        as="button"
-                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Click here to re-send the verification email.
-                    </Link>
-                </p>
 
-                <div
-                    v-show="status === 'verification-link-sent'"
-                    class="mt-2 font-medium text-sm text-green-600"
-                >
-                    A new verification link has been sent to your email address.
-                </div>
+
+            <div v-if="user.assigned_role === 'author'">
+
+
+            <div>
+                <InputLabel for="avatar" value="Your Photo" />
+
+                <input id="file-upload" name="avatar" type="file" @change="form.avatar = $event.target.files[0]" />
+
+                <InputError class="mt-2" :message="form.errors.avatar" />
             </div>
+
+            <div>
+                <InputLabel for="country" value="Country" />
+
+                <TextInput
+                    id="country"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.country"
+                    value="$props.user.profile.country"
+                    autocomplete="country"
+                />
+
+                <InputError class="mt-2" :message="form.errors.country" />
+            </div>
+
+            <div>
+                <InputLabel for="city" value="City" />
+
+                <TextInput
+                    id="city"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.city"
+                    autocomplete="city"
+                />
+
+                <InputError class="mt-2" :message="form.errors.city" />
+            </div>
+
+            <div>
+                <InputLabel for="postal_address" value="Postal Address" />
+
+                <TextInput
+                    id="postal_address"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.postal_address"
+                    autocomplete="postal_address"
+                />
+
+                <InputError class="mt-2" :message="form.errors.postal_address" />
+            </div>
+
+            <div>
+                <InputLabel for="postal_code" value="Postal Code" />
+
+                <TextInput
+                    id="postal_code"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.postal_code"
+                    autocomplete="postal_code"
+                />
+
+                <InputError class="mt-2" :message="form.errors.postal_code" />
+            </div>
+
+            <div>
+                <InputLabel for="facebook_link" value="Facebook Link" />
+
+                <TextInput
+                    id="facebook_link"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.facebook_link"
+                    autocomplete="facebook_link"
+                />
+
+                <InputError class="mt-2" :message="form.errors.facebook_link" />
+            </div>
+
+            <div>
+                <InputLabel for="x_link" value="X Link" />
+
+                <TextInput
+                    id="x_link"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.x_link"
+                    autocomplete="x_link"
+                />
+
+                <InputError class="mt-2" :message="form.errors.x_link" />
+            </div>
+
+            <div>
+                <InputLabel for="linkedin_link" value="Linkedin Link" />
+
+                <TextInput
+                    id="linkedin_link"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.linkedin_link"
+                    autocomplete="linkedin_link"
+                />
+
+                <InputError class="mt-2" :message="form.errors.linkedin_link" />
+            </div>
+
+            <div>
+                <InputLabel for="instagram_link" value="Instagram Link" />
+
+                <TextInput
+                    id="instagram_link"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.instagram_link"
+                    autocomplete="instagram_link"
+                />
+
+                <InputError class="mt-2" :message="form.errors.instagram_link" />
+            </div>
+
+            <div>
+                <InputLabel for="twitter_site" value="Twitter Handler" />
+
+                <TextInput
+                    id="twitter_site"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.twitter_site"
+                    autocomplete="twitter_site"
+                />
+
+                <InputError class="mt-2" :message="form.errors.twitter_site" />
+            </div>
+
+            <div>
+                <InputLabel for="user_info" value="Author Information" />
+
+                <TextInput
+                    id="user_info"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.user_info"
+                    autocomplete="user_info"
+                />
+
+                <InputError class="mt-2" :message="form.errors.user_info" />
+            </div>
+
+            </div>
+
 
             <div class="flex items-center gap-4">
                 <PrimaryButton :disabled="form.processing">Save</PrimaryButton>

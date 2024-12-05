@@ -1,7 +1,7 @@
 <template>
-<div class="sidebar-wrap">
-	<div class="p-2 md:p-4 lg:p-4">
-		<div class="p-4 pl-4">
+<aside class="sidebar-wrap">
+	<div class="p-2 md:p-4 lg:p-4 ">
+		<div class="py-4 px-2 pb-6">
 			<div>
 				<h2 class="sidebar-h2">Categories</h2>
 			</div>
@@ -13,15 +13,13 @@
 
 			<div>
 				<h2 class="sidebar-h2">Tags</h2>
-			</div>
-
-			<div class="mt-4">
-				<Tags :tags="tags"/>
-			</div>
+				<div class="mt-4 w-[96%] mx-auto">
+					<Tags :tags="tags"/>
+				</div>
+			</div>		
 		</div>
 	</div>
-	
-</div>
+</aside>
 </template>
 
 <script setup>

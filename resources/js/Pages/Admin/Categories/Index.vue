@@ -43,7 +43,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(category, index) in categories" :key="index"
+                                    <tr v-for="category in $props.categories" :key="category.id"
                                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                                             {{ index + 1 }}
@@ -83,6 +83,11 @@
 </template>
 
 <script setup>
+import DataTable from 'primevue/datatable';
+import Tag from 'primevue/tag';
+import SelectButton from 'primevue/selectbutton';
+import IconField from 'primevue/iconfield';
+import InputIcon from 'primevue/inputicon';
 import Messages from "@/Partials/Messages/Messages.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";

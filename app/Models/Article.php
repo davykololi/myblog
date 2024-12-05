@@ -161,7 +161,7 @@ class Article extends Model implements Feedable
 
     public function getImageUrlAttribute()
     {
-        return URL::asset('/storage/'.$this->image);
+        return URL::asset('/storage/'.$this->image) ?? "";
     }
 
     public function getReadingTimeAttribute()

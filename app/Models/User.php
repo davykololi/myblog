@@ -32,7 +32,6 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = ['name','email','assigned_role','password','slug'];
-    protected $with = ['articles','comments'];
     protected $appends = ['absolute_url'];
 
     /**
@@ -97,7 +96,7 @@ class User extends Authenticatable
 
     public function scopeEagerLoaded($query)
     {
-        return $query->with('articles','comments');
+        return $query->with('articles','comments','profile');
     }
 
     public function isAdmin()

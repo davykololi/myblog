@@ -3,6 +3,8 @@
         <title v-once>{{ title }}</title>
         <meta v-once name="description" :content="desc">
         <meta v-once name="keywords" :content="keyw">
+        <meta v-once name="robots" :content="robots">
+        <meta v-once name="googlebot" :content="robots">
         <link v-once rel="canonical" :href="canonUrl">
         <meta v-once property="og:title" :content="tle + ' ' + '-' + ' ' + appName">
         <meta v-once property="og:description" :content="desc">
@@ -10,7 +12,6 @@
         <meta v-once property="og:url" :content="siteUrl">
         <meta v-once property="og:secure_url" :content="siteSecureUrl">
         <meta v-once property="og:site_name" :content="siteName">
-
         <meta v-once name="twitter:card" :content="twitterCard">
         <meta v-once name="twitter:site" :content="twitterSite">
         <meta v-once name="twitter:creator" :content="siteCreator">
@@ -21,15 +22,13 @@
 
     <GuestLayout>
         <template #header>
-            <Breadcrumb :routelink="['']" :text="['']"></Breadcrumb>
+            <BreadcrumbView :breadcrumbview="breadcrumbsJsonld" v-memo/>
         </template>
-
         <SchemaOrg :schemaorg="homeSchema" v-memo/>
-
-        <MainPage>
+        <BreadcrumbsJsonld :jsonldbreadcrumbs="headBreadcrumb"/>
+        <MainPage class="w-full">
             <h2 v-once class="uppercase">{{ title }}</h2>
         </MainPage>
-        <FrontendSidebar/>
     </GuestLayout>
 </template>
 
@@ -40,16 +39,20 @@ import FrontendSidebar from '@/Partials/Sidebars/FrontendSidebar.vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import MainPage from '@/Partials/MainPage/MainPage.vue';
 import Breadcrumb from '@/Partials/Breadcrumbs/Breadcrumb.vue';
+import BreadcrumbView from '@/Partials/Breadcrumbs/BreadcrumbView.vue';
+import BreadcrumbsJsonld from '@/Partials/Breadcrumbs/BreadcrumbsJsonld.vue';
 import SchemaOrg from '@/Partials/SchemaOrg/SchemaOrg.vue';
 const page = usePage();
 import { computed } from 'vue';
 const appName = computed(() => page.props.appName);
+const breadcrumbsJsonld = computed(() => page.props.breadcrumbs);
 
 const props = defineProps({
   title: String,
   description: String,
   keywords: String,
   canonical_url: String,
+  robots: String,
   site_type: String,
   site_url: String,
   site_secure_url: String,
@@ -57,12 +60,14 @@ const props = defineProps({
   twitter_card: String,
   site_creator: String,
   homeSchemaOrg: Object,
+  homeJsonLdBreadcrumb: Object,
 });
 
 const tle = computed(() => props.title);
 const desc = computed(() => props.description);
 const keyw = computed(() => props.keywords);
 const canonUrl = computed(() => props.canonical_url);
+const robots = computed(() => props.robots);
 const siteType = computed(() => props.site_type);
 const siteUrl = computed(() => props.site_url);
 const siteSecureUrl = computed(() => props.site_secure_url);
@@ -71,4 +76,5 @@ const twitterCard = computed(() => props.twitter_card);
 const twitterSite = computed(() => props.site_creator);
 const siteCreator = computed(() => props.site_creator);
 const homeSchema = computed(() => props.homeSchemaOrg);
+const headBreadcrumb = computed(() => props.homeJsonLdBreadcrumb);
 </script>

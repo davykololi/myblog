@@ -26,7 +26,7 @@
       </tr>
     </thead>
     <tbody v-if="props.articles.data.length > 0">
-      <tr v-for="(article, index) in props.articles.data" :key="article.id" class="bg-white border-b dark:border-neutral-500 dark:text-slate-400 dark:bg-slate-800 px-4 md:px-8">
+      <tr v-for="article in $props.articles.data" :key="article.id" class="bg-white border-b dark:border-neutral-500 dark:text-slate-400 dark:bg-slate-800 px-4 md:px-8">
         <td class="px-2">{{ index + 1 }}</td>
         <td class="px-2">{{ article.title }}</td>
         <td class="px-2"><img :src="article.image_url" :alt="article.title" style="width:60%"/></td>

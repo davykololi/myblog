@@ -1,11 +1,9 @@
 <template>
-      <div class="mainpage-wrap">
-            <div class="px-2 md:px-4 lg:px-4 py-4">
-                  <div class="px-2">
-                        <slot/>
-                  </div>
+      <main class="mainpage-wrap">
+            <div class="mx-2 md:mx-4 lg:mx-4">
+                  <slot/>
             </div>
-      </div>
+      </main>
 </template>
 <script setup>
 
